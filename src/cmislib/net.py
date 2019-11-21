@@ -25,7 +25,9 @@ response it receives.
 
 from urllib.parse import urlencode
 import logging
-import httplib2
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 
 class RESTService(object):
@@ -58,13 +60,9 @@ class RESTService(object):
             else:
                 url = url + '?' + urlencode(kwargs)
 
-        self.logger.debug('About to do a GET on:' + url)
-
-        h = httplib2.Http()
-        h.add_credentials(username, password)
+        self.logger.debug('About to do a GET on:' + str(url))
         headers['User-Agent'] = self.user_agent
-
-        return h.request(url, method='GET', headers=headers)
+        return requests.get(url, verify=False, headers=headers, auth=HTTPBasicAuth(username, password))
 
     def delete(self, url, username=None, password=None, **kwargs):
 
@@ -81,13 +79,10 @@ class RESTService(object):
             else:
                 url = url + '?' + urlencode(kwargs)
 
-        self.logger.debug('About to do a DELETE on:' + url)
+        self.logger.debug('About to do a DELETE on:' + str(url))
 
-        h = httplib2.Http()
-        h.add_credentials(username, password)
         headers['User-Agent'] = self.user_agent
-
-        return h.request(url, method='DELETE', headers=headers)
+        return requests.delete(url, verify=False, headers=headers, auth=HTTPBasicAuth(username, password))
 
     def put(self,
             url,
@@ -116,12 +111,11 @@ class RESTService(object):
 
         self.logger.debug('About to do a PUT on:' + url)
 
-        h = httplib2.Http()
-        h.add_credentials(username, password)
         headers['User-Agent'] = self.user_agent
         if contentType is not None:
             headers['Content-Type'] = contentType
-        return h.request(url, body=payload, method='PUT', headers=headers)
+        return requests.put(url, verify=False, headers=headers, auth=HTTPBasicAuth(username, password),
+                                 data=payload)
 
     def post(self,
              url,
@@ -150,9 +144,7 @@ class RESTService(object):
 
         self.logger.debug('About to do a POST on:' + url)
 
-        h = httplib2.Http()
-        h.add_credentials(username, password)
         headers['User-Agent'] = self.user_agent
         if contentType is not None:
             headers['Content-Type'] = contentType
-        return h.request(url, body=payload, method='POST', headers=headers)
+        return requests.post(url, verify=False, headers=headers, auth=HTTPBasicAuth(username, password),data=payload)

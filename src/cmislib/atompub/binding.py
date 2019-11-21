@@ -35,7 +35,7 @@ import re
 import mimetypes
 from xml.parsers.expat import ExpatError
 import datetime
-import StringIO
+from io import StringIO
 import logging
 from xml.dom import minidom
 
