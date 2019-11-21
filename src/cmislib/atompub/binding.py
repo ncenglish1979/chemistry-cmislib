@@ -30,8 +30,7 @@ from cmislib.exceptions import CmisException, \
     NotSupportedException
 from cmislib.util import multiple_replace, parsePropValue, parseBoolValue, toCMISValue, parseDateTimeValue, safe_quote
 
-from urllib.parse import quote
-from urlparse import urlparse, urlunparse
+from urllib.parse import urlparse, urlunparse
 import re
 import mimetypes
 from xml.parsers.expat import ExpatError
