@@ -25,7 +25,7 @@ import iso8601
 import logging
 import datetime
 from cmislib.domain import CmisId
-from urllib import urlencode, quote
+from urllib.parse import urlencode, quote
 
 moduleLogger = logging.getLogger('cmislib.util')
 
